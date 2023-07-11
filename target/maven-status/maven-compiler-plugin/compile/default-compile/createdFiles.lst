@@ -1,0 +1,5 @@
+com\project\staragile\insureme\PolicyController.class
+com\project\staragile\insureme\Policy.class
+com\project\staragile\insureme\PolicyService.class
+com\project\staragile\insureme\PolicyRepository.class
+com\project\staragile\insureme\InsureMeApplication.class
