@@ -88,7 +88,7 @@ resource "aws_security_group" "mysg" {
 }
 
 resource "aws_instance" "terraform" {
-  ami                         = "ami-08e5424edfe926b43"
+  ami                         = "ami-006935d9a6773e4ec"
   instance_type               = "t2.micro"
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.mysubnet.id
