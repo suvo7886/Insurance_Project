@@ -60,7 +60,7 @@ stages{
         }
         stage("Create Build Server"){
             steps {
-                sh "terraform -chdir=terraform apply -auto-approve"
+                sh "terraform -chdir=terraform apply -auto-approve=true"
             }
         }
        // stage('configure test-server and deploy insure-me'){
