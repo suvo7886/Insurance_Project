@@ -18,14 +18,14 @@ stages{
        }
     stage('Package with Maven') {
         steps{
-        sh "mvn -Dmaven.test.failure.ignore=true clean package"
-    //echo "Artifact created"
+      //  sh "mvn -Dmaven.test.failure.ignore=true clean package"
+    echo "Building"
               }
             }
     stage("Build with Docker "){
         steps {
             sh 'docker version'
-            sh "docker build -t suvo7886/insurance-project:v2 ."
+        //    sh "docker build -t suvo7886/insurance-project:v2 ."
             sh 'docker image list'
             }
         }
@@ -43,7 +43,8 @@ stages{
         }
         stage('Push to DockerHub') {
             steps {
-            sh "docker push suvo7886/insurance-project:v2"
+      //      sh "docker push suvo7886/insurance-project:v2"
+	echo "Pushed"
             }
         }
         stage("Terraform Configure"){
@@ -54,7 +55,7 @@ stages{
         stage("Create K8S Server"){
             steps {
                 sh 'terraform -chdir=terraform plan'
-                sh "terraform -chdir=terraform apply -auto-approve -input=false"
+           //     sh "terraform -chdir=terraform apply -auto-approve -input=false"
             }
         }
     //  stage('Configure Ansible'){
