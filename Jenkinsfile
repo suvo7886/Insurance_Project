@@ -19,14 +19,14 @@ stages{
     stage('Package with Maven') {
         steps{
       //  sh "mvn -Dmaven.test.failure.ignore=true clean package"
-    echo "Building"
+    echo "Building done"
               }
             }
     stage("Build with Docker "){
         steps {
             sh 'docker version'
         //    sh "docker build -t suvo7886/insurance-project:v2 ."
-            sh 'docker image list'
+        //    sh 'docker image list'
             }
         }
        stage('Login to DockerHub') {
@@ -44,22 +44,19 @@ stages{
         stage('Push to DockerHub') {
             steps {
       //      sh "docker push suvo7886/insurance-project:v2"
-	echo "Pushed"
+	echo "Push done"
             }
         }
-        stage("Terraform Configure"){
+        stage("Provisioning Server Using Terraform"){
             steps {
-                sh 'terraform -chdir=terraform init'
-            }
-        }
-        stage("Create K8S Server"){
-            steps {
-                sh 'terraform -chdir=terraform plan'
+		//  sh 'terraform -chdir=terraform init'
+            //    sh 'terraform -chdir=terraform plan'
            //     sh "terraform -chdir=terraform apply -auto-approve -input=false"
+		    echo "Server create done"
             }
         }
-    //  stage('Configure Ansible'){
-      //    echo "configuring applications using ansible"
+      stage('Configure Server Using Ansible'){
+         echo "configuring applications using ansible"
       //    sh 'ansible-playbook configure-test-server.yml'
      //     ansiblePlaybook become: true, credentialsId: 'ssh-key-ansibles', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'configure-test-server.yml'
    //     }
