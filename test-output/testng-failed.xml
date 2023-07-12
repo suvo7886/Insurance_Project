@@ -5,8 +5,8 @@
     <classes>
       <class name="com.project.staragile.insureme.SeleniumTestngTest">
         <methods>
-          <include name="tearDown"/>
           <include name="initDriver"/>
+          <include name="tearDown"/>
           <include name="testCreatePolicy"/>
           <include name="testSearchPolicy"/>
         </methods>
