@@ -55,11 +55,11 @@ stages{
 		    echo "Server create done"
             }
         }
-      stage('Configure Server Using Ansible'){
+      stage("Configure Server Using Ansible"){
          echo "configuring applications using ansible"
       //    sh 'ansible-playbook configure-test-server.yml'
      //     ansiblePlaybook become: true, credentialsId: 'ssh-key-ansibles', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'configure-test-server.yml'
-   //     }
+      }
         stage('Approve for Deployment to Kubernetes Cluster'){
            steps{
               script {
