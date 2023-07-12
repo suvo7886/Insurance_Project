@@ -96,6 +96,6 @@ resource "aws_instance" "terraform" {
   key_name                    = "StarAgile"
 
   tags = {
-    Name = "Kubenetes-Master"
+    Name = "Kubenetes-Slave"
   }
 }
