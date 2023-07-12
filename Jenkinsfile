@@ -22,10 +22,9 @@ stages{
     //echo "Artifact created"
               }
             }
-    stage("Docker Build"){
+    stage("Build with Docker "){
         steps {
             sh 'docker version'
-            //sh 'docker pull suvo7886/insurance-project:1.0"
             sh "docker build -t suvo7886/insurance-project:v2 ."
             sh 'docker image list'
             }
@@ -33,7 +32,6 @@ stages{
        stage('Login to DockerHub') {
         steps {
            sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-           // sh 'winpty docker login'
             }
         }
        stage('Approve for Push Image to Dockerhub'){
@@ -48,33 +46,29 @@ stages{
             sh "docker push suvo7886/insurance-project:v2"
             }
         }
-        stage("Intialize Build Server"){
+        stage("Terraform Configure"){
             steps {
                 sh 'terraform -chdir=terraform init'
             }
         }
-        stage("Plan Build Server"){
+        stage("Create K8S Server"){
             steps {
                 sh 'terraform -chdir=terraform plan'
-            }
-        }
-        stage("Create Build Server"){
-            steps {
                 sh "terraform -chdir=terraform apply -auto-approve -input=false"
             }
         }
-       // stage('configure test-server and deploy insure-me'){
-       //     echo "configuring test-server"
-          //  sh 'ansible-playbook configure-test-server.yml'
-     //       ansiblePlaybook become: true, credentialsId: 'ssh-key-ansibles', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'configure-test-server.yml'
+    //  stage('Configure Ansible'){
+      //    echo "configuring applications using ansible"
+      //    sh 'ansible-playbook configure-test-server.yml'
+     //     ansiblePlaybook become: true, credentialsId: 'ssh-key-ansibles', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'configure-test-server.yml'
    //     }
-    //    stage('Approve - Deployment to Kubernetes Cluster'){
-    //        steps{
-    //            script {
-    //               env.APPROVED_DEPLOY = input message: 'User input required Choose "Yes" | "Abort"'
-    //            }
-    //        }
-   //     }
+        stage('Approve for Deployment to Kubernetes Cluster'){
+           steps{
+              script {
+                env.APPROVED_DEPLOY = input message: 'User input required Choose "Yes" | "Abort"'
+              }
+         }
+    }
      //   stage('Deploy to Kubernetes Cluster') {
            // when {
              //   branch 'master'
