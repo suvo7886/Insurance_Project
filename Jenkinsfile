@@ -18,15 +18,16 @@ stages{
        }
     stage('Package with Maven') {
         steps{
-      //  sh "mvn -Dmaven.test.failure.ignore=true clean package"
-    echo "Building done"
+        sh "mvn -Dmaven.test.failure.ignore=true clean package"
+    	echo "Building done"
               }
             }
     stage("Build with Docker "){
         steps {
             sh 'docker version'
-        //    sh "docker build -t suvo7886/insurance-project:v2 ."
-        //    sh 'docker image list'
+            sh "docker build -t suvo7886/insurance-project:v2 ."
+            sh 'docker image list'
+	echo "Image created"
             }
         }
        stage('Login to DockerHub') {
@@ -43,23 +44,23 @@ stages{
         }
         stage('Push to DockerHub') {
             steps {
-      //      sh "docker push suvo7886/insurance-project:v2"
-	echo "Push done"
+           sh "docker push suvo7886/insurance-project:v2"
+	   echo "Push done"
             }
         }
         stage("Provisioning Server Using Terraform"){
             steps {
-		//  sh 'terraform -chdir=terraform init'
-            //    sh 'terraform -chdir=terraform plan'
-           //     sh "terraform -chdir=terraform apply -auto-approve -input=false"
-		    echo "Server create done"
+	     sh 'terraform -chdir=terraform init'
+             sh 'terraform -chdir=terraform plan'
+             sh "terraform -chdir=terraform apply -auto-approve -input=false"
+	     echo "Server create done"
             }
         }
       stage("Configure Server Using Ansible"){
 	steps {
-         echo "Configuration done"
-      //    sh 'ansible-playbook configure-test-server.yml'
-     //     ansiblePlaybook become: true, credentialsId: 'ssh-key-ansibles', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'configure-test-server.yml'
+          echo "Configuration done"
+        //  sh 'ansible-playbook configure-test-server.yml'
+        //  ansiblePlaybook become: true, credentialsId: 'ssh-key-ansibles', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'configure-test-server.yml'
       	}
       }
         stage('Approve for Deployment to Kubernetes Cluster'){
