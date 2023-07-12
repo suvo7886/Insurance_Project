@@ -83,6 +83,7 @@ stages{
 				  mail bcc: '', body: "Deployment to Kubernetes Cluster Failed", cc: 'suvo7886@gmail.com', from: '', replyTo: '', subject: "Deployment Status", to: 'suvo7886@gmail.com'
 				}
 			  }	
-	}
-}
+	         }
+            }
+      }
 }
