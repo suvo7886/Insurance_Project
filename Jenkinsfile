@@ -72,7 +72,7 @@ stages{
     stage('Deploy to Kubernetes Cluster') {
             steps {
 		script {
-			sshPublisher(publishers: [sshPublisherDesc(configName: 'K8S_Server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'kubectl apply -f deployment.yml', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/home/devopsadmin', remoteDirectorySDF: false, removePrefix: '', sourceFiles: 'deployment.yml')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])	
+			sshPublisher(publishers: [sshPublisherDesc(configName: 'K8S_Server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'kubectl apply -f deployment.yml', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '*.yml')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])	
 			}
 		}
 			  post {
