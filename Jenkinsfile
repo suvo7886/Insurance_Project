@@ -69,18 +69,22 @@ stages{
               }
          }
     }
-     //   stage('Deploy to Kubernetes Cluster') {
-           // when {
-             //   branch 'master'
-            //  }
-        //      steps {
-             //   sh 'kubectl apply -f k8s_deploy.yml'
-             // }
-          //          steps {
-       //       script {
-       //       sshPublisher(publishers: [sshPublisherDesc(configName: 'Tomcat', sshCredentials: [encryptedPassphrase: '{AQAAABAAAAAQMehNiXEPfBOSBRiDhoCIsavgPk0knad+653Wr2hSzWQ=}', key: '', keyPath: '', username: 'admin'], transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'kubectl apply -f k8s_deploy.yml', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '*.yml')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
-        //  kubernetesDeploy(configs: "k8s_deploy.yml", "service_deploy.yml")
-      //    }
-    //    }
-    }
-  }
+    stage('Deploy to Kubernetes Cluster') {
+            steps {
+			script {
+				sshPublisher(publishers: [sshPublisherDesc(configName: 'K8S_Server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'kubectl apply -f deployment.yml', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '*.yml')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+			}
+		}
+			  post {
+				success {
+				  sh "echo 'Send mail on success'"
+				  mail bcc: '', body: "Deployment to Kubernetes Cluster is successful", cc: 'suvo7886@gmail.com', from: '', replyTo: '', subject: "Job ${JOB_NAME} (${BUILD_NUMBER})", to: 'suvo7886@gmail.com'
+				}
+				failure {
+				  sh "echo 'Send mail on failure'"
+				  mail bcc: '', body: "Deployment to Kubernetes Cluster Failed", cc: 'suvo7886@gmail.com', from: '', replyTo: '', subject: "Deployment Status", to: 'suvo7886@gmail.com'
+				}
+			  }	
+	}
+}
+}
