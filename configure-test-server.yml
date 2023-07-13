@@ -7,6 +7,9 @@
 
   - name: install docker
     command: sudo yum install docker -y
+    
+  - name: start docker service
+    command: sudo systemctl enable docker 
 
   - name: start docker service
     command: sudo systemctl start docker
