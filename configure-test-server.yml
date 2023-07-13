@@ -1,20 +1,15 @@
 ---
-- hosts: test-server
+- hosts: monitoring
   become: true
   tasks:
-  - name: update apt
-    command: sudo apt-get update
+  - name: update package
+    command: sudo yum update -y
 
   - name: install docker
-    command: sudo apt install -y docker.io
+    command: sudo yum install docker -y
 
   - name: start docker service
     command: sudo systemctl start docker
-
-  - name: stop container
-    command: sudo docker stop insure-me
-     
-  - name: remove container
-    command: sudo docker rm insure-me
-  - name: deploy insureme application
-    command: sudo docker run -itd -p 8081:8081 --name insure-me shubhamkushwah123/insure-me:1.0
+    
+  - name: deploy insurance project application
+    command: sudo docker run -itd -p 8084:8084 --name insurance-project suvo7886/insurance-project:1.0
