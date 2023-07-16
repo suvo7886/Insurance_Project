@@ -53,7 +53,7 @@ stages{
 	     sh 'terraform -chdir=terraform init'
              sh 'terraform -chdir=terraform plan'
              sh "terraform -chdir=terraform apply -auto-approve -input=false"
-	     echo "Server create done"
+	     echo "Server creation done"
             }
         }
       stage("Configure Server Using Ansible"){
