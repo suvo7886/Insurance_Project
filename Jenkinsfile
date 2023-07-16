@@ -25,7 +25,7 @@ stages{
     stage("Build with Docker "){
         steps {
             sh 'docker version'
-            sh "docker build -t suvo7886/insurance-project:v2 ."
+            sh "docker build -t suvo7886/insurance-project:v1 ."
             sh 'docker image list'
 	echo "Image created"
             }
